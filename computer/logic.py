@@ -5,6 +5,7 @@ from gates import OR
 
 
 def is_zero_8bit(a: str) -> bool:
+    """Return 1 if the 8bit number is zero."""
     o1 = OR(a[0], a[1])
     o2 = OR(a[2], a[3])
     o3 = OR(a[4], a[5])

@@ -1,27 +1,30 @@
 """Logic gates (implemented with transistors IRL)"""
 
 
-# TODO Maybe simulate a basic transistor to use for AND, OR and NOT?
+# TODO Use Bit class
 
 
-def AND(a: str, b: str) -> str:
-    return "1" if a == "1" and b == "1" else "0"
+from computer.bits_and_bytes import Bit
 
 
-def OR(a: str, b: str) -> str:
-    return "1" if a == "1" or b == "1" else "0"
+def AND(a: Bit, b: Bit) -> Bit:
+    return a and b
 
 
-def NOT(a: str) -> str:
-    return "1" if a == "0" else "0"
+def OR(a: Bit, b: Bit) -> Bit:
+    return a or b
 
 
-def XOR(a: str, b: str) -> str:
+def NOT(a: Bit) -> Bit:
+    return not a
+
+
+def XOR(a: Bit, b: Bit) -> Bit:
     c = AND(a, b)
     d = NOT(c)
     e = OR(a, b)
     return AND(d, e)
 
 
-def NAND(a: str, b: str) -> str:
+def NAND(a: Bit, b: Bit) -> Bit:
     return NOT(AND(a, b))

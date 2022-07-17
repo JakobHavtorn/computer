@@ -1,11 +1,79 @@
+"""https://www.youtube.com/watch?v=1I5ZMmrOfnA&list=PLH2l6uzC4UEW0s7-KewFLBC1D0l6XRfye&index=6"""
 
+
+from abc import ABC, abstractmethod
 from typing import Optional
 
 
-OVERFLOW = 
+OVERFLOW = ""
+ZERO = ""
+NEGATIVE = ""
 
 
-class ALU():
+class AbstractALU(ABC):
+    OP_CODES = dict()
+    FLAGS = dict()
+
+    def __init__(self) -> None:
+        """Simulation of an Arithmetic Logic Unit (ALU).
+
+        Takes two input bitstrings `a` and `b` as well as an operation code `c` that specifies the operation to run.
+        Returns an output bitstring along with flag bits indicating opreation status and output properties such as
+        overflow, zero and negative.
+        """
+        super().__init__()
+
+    @abstractmethod
+    def add(self, a: str, b: str):
+        """Add two bit strings."""
+        pass
+
+    @abstractmethod
+    def add_with_carry(self, a: str, b: str, carry: str):
+        """Add two bit strings and a carry bit."""
+        pass
+
+    @abstractmethod
+    def subtact(self, a: str, b: str):
+        """Subtract bitstring `b` from bitstring `a`."""
+        pass
+
+    @abstractmethod
+    def subtract_with_borrow(self, a: str, b: str, carry: str):
+        """Subtract bitstring `b` from bitstring `a`. with borrow `carry`."""
+        pass
+
+    @abstractmethod
+    def negate(self, a: str):
+        """Negative the sign of a bitstring by subtracting it from zero."""
+        pass
+
+    @abstractmethod
+    def increment(self, a: str):
+        """Add 1 to a bitstring."""
+        pass
+
+    @abstractmethod
+    def decrement(self, a: str):
+        """Subtract 1 from a bitstring."""
+        pass
+
+    @abstractmethod
+    def multiply(self, a: str, b: str):
+        """Multiply together two bitstrings."""
+        pass
+
+    @abstractmethod
+    def divide(self, a: str, b: str):
+        """Divide bitstring `a` by bitstring `b`."""
+
+    @abstractmethod
+    def pass_through(self, a: str):
+        """All bits of a bitstring are passed through without modification."""
+        return a
+
+
+class ALU8Bit(AbstractALU):
     OP_CODES = dict(
         
     )
@@ -19,6 +87,7 @@ class ALU():
         
 
     def add(self, a: str, b: str):
+        """Add two """
         pass
 
     def add_with_carry(self, a: str, b: str):

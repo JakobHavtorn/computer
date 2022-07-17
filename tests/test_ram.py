@@ -44,6 +44,6 @@ def test_gated_latch(data, write_enable, initial_state, expected_state):
     assert gated_latch.read() == expected_state
 
 
-
 def test_register():
+    import IPython; IPython.embed(using=False)
     register = Register()

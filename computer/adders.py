@@ -1,4 +1,7 @@
-"""Addition circuits"""
+"""Addition circuits
+
+https://www.youtube.com/watch?v=1I5ZMmrOfnA&list=PLH2l6uzC4UEW0s7-KewFLBC1D0l6XRfye&index=6
+"""
 
 
 from computer.gates import AND, OR, XOR
@@ -9,7 +12,7 @@ from computer.configuration import PRECISION
 
 
 def half_adder(a: str, b: str):
-    """Add two bits together and return the sum and carry bit.
+    """Add two bits together and returns the sum and carry bit.
 
     Max output is 2 i.e. sum=0, carry=1.
 
@@ -49,7 +52,7 @@ def full_adder(a: str, b: str, c: str):
     return sum, carry
 
 
-def ripple_carry_adder(a: str, b: str, precision: int = PRECISION):
+def ripple_carry_adder_8bit(a: str, b: str, precision: int = PRECISION):
     """Add two numbers represented as bit strings together and return the sum and carry bit"""
     # allocate memory for the sum and carry
     sum = ["0"] * precision
@@ -60,3 +63,7 @@ def ripple_carry_adder(a: str, b: str, precision: int = PRECISION):
         print(i, sum[-i], carry)
     sum = "".join(sum)
     return sum, carry
+
+
+def carry_look_ahead_adder():
+    pass

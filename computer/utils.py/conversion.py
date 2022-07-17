@@ -23,7 +23,6 @@ def float2binary(number, precision: int):
     whole_bit = bin(int(whole))
 
 
-
 # # Function returns octal representation
 # def float2binary(number, places = 3):
 
