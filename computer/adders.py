@@ -4,6 +4,9 @@ https://www.youtube.com/watch?v=1I5ZMmrOfnA&list=PLH2l6uzC4UEW0s7-KewFLBC1D0l6XR
 """
 
 
+from typing import Tuple
+
+from computer.bits_and_bytes import Bit, BitString, Byte
 from computer.gates import AND, OR, XOR
 from computer.configuration import PRECISION
 
@@ -11,7 +14,7 @@ from computer.configuration import PRECISION
 # TODO Refactor to stateless classes?
 
 
-def half_adder(a: str, b: str):
+def half_adder(a: Bit, b: Bit) -> Tuple[Bit, Bit]:
     """Add two bits together and returns the sum and carry bit.
 
     Max output is 2 i.e. sum=0, carry=1.
@@ -29,7 +32,7 @@ def half_adder(a: str, b: str):
     return sum, carry
 
 
-def full_adder(a: str, b: str, c: str):
+def full_adder(a: Bit, b: Bit, c: Bit) -> Tuple[Bit, Bit]:
     """Add three bits together and return the sum and carry bit.
 
     Max output is 3 i.e. sum=1, carry=1.
@@ -52,18 +55,17 @@ def full_adder(a: str, b: str, c: str):
     return sum, carry
 
 
-def ripple_carry_adder_8bit(a: str, b: str, precision: int = PRECISION):
-    """Add two numbers represented as bit strings together and return the sum and carry bit"""
+def ripple_carry_adder_8bit(a: Byte, b: Byte):
+    """Add two numbers represented as 8-bit strings (bytes) together and return the sum byte and carry bit."""
     # allocate memory for the sum and carry
-    sum = ["0"] * precision
-    carry = "0"
-    # from right-most bit, call full-adder and carry the result forward to next bit
-    for i in range(1, precision + 1):
+    sum = Byte("0" * 8)
+    carry = Bit("0")
+    # from right-most (smallest) bit, call full-adder and carry the result forward to next bit
+    for i in range(1, 9):
         sum[-i], carry = full_adder(a[-i], b[-i], carry)
-        print(i, sum[-i], carry)
-    sum = "".join(sum)
     return sum, carry
 
 
 def carry_look_ahead_adder():
-    pass
+    """Add two numbers represented as bit strings and return the sum and carry bit"""
+    

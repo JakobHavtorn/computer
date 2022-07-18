@@ -4,6 +4,7 @@ https://www.youtube.com/watch?v=fpnE6UAfbtU&list=PLH2l6uzC4UEW0s7-KewFLBC1D0l6XR
 """
 
 import math
+
 from typing import Tuple
 from computer.bits_and_bytes import Bit, BitString, Byte
 from computer.gates import AND, NOT, OR
@@ -15,19 +16,18 @@ class AndOrLatch():
         self.or_gate = OR
         self.and_gate = AND
         self.not_gate = NOT
-        self.output = "0"
+        self.is_set = Bit(0)
 
     def read(self) -> Bit:
-        return self.output
+        return self.is_set
 
     def write(self, set: Bit, reset: Bit):
-        set = self.or_gate(set, self.output)
+        set = self.or_gate(set, self.is_set)
         not_reset = self.not_gate(reset)
-        new_output = self.and_gate(set, not_reset)
-        self.output = new_output
+        self.is_set = self.and_gate(set, not_reset)
 
     def __repr__(self):
-        return f"AndOrLatch(output={self.output})"
+        return f"AndOrLatch(output={self.is_set})"
 
 
 class Gate():
@@ -48,7 +48,7 @@ class Gate():
 
 class GatedLatch():
     def __init__(self) -> None:
-        """A 1-bit memory store using a gated latch"""
+        """A 1-bit memory store using a gated latch."""
         self.and_or_latch = AndOrLatch()
         self.gate = Gate()
 
@@ -58,6 +58,9 @@ class GatedLatch():
     def write(self, data: Bit, write_enable: Bit):
         set, reset = self.gate(data, write_enable)
         self.and_or_latch.write(set, reset)
+
+    def __repr__(self) -> str:
+        return f"GatedLatch({self.and_or_latch.is_set})"
 
 
 class LinearRegister():
@@ -96,14 +99,18 @@ class MatrixRegister():
         For a 256-bit register (`width=16`) we only need 35 wires in the matrix construction; 
         1 data wire, 1 write_enable wrire, 1 read enable wire, 16 row wires and 16 column wires.
         """
-        import IPython; IPython.embed(using=False)
         self.width = width
         self.latches = [[GatedLatch() for _ in range(width)] for _ in range(width)]
-        self.and_gates = [[AND for _ in range(width)] for _ in range(width)]
+        self.and_gates_r = [[AND for _ in range(width)] for _ in range(width)]
+        self.and_gates_w = [[AND for _ in range(width)] for _ in range(width)]
 
     def read(self, row: int, col: int, read_enable: Bit) -> Bit:
         """Read data from the register address at `(row, col)` indexed by a multiplexer."""
-        return self.latches[row][col].read(read_enable)
+        selected = AND(row, col)
+        read_enabled = AND(selected, read_enable)
+        if read_enabled:
+            return self.latches[row][col].read()
+        return Bit(0)
 
     def write(self, row: int, col: int, data: Bit, write_enable: Bit) -> Bit:
         """Write `data` to the register address at `(row, col)` indexed by a MultiPlexer."""

@@ -1,6 +1,7 @@
 import pytest
 
-from computer.adders import half_adder, full_adder, ripple_carry_adder
+from computer.adders import half_adder, full_adder, ripple_carry_adder_8bit
+from computer.bits_and_bytes import Bit, BitString, Byte
 
 
 @pytest.mark.parametrize(
@@ -13,6 +14,7 @@ from computer.adders import half_adder, full_adder, ripple_carry_adder
     ]
 )
 def test_half_adder(a, b, sum, carry):
+    a, b, sum, carry = Bit(a), Bit(b), Bit(sum), Bit(carry)
     s, c = half_adder(a, b)
     assert s == sum
     assert c == carry
@@ -32,6 +34,7 @@ def test_half_adder(a, b, sum, carry):
     ]
 )
 def test_full_adder(a, b, c, sum, carry):
+    a, b, c, sum, carry = Bit(a), Bit(b), Bit(c), Bit(sum), Bit(carry)
     s, c = full_adder(a, b, c)
     assert s == sum
     assert c == carry
@@ -51,7 +54,9 @@ def test_full_adder(a, b, c, sum, carry):
     ]
 )
 def test_ripple_carry_adder(a, b, sum, carry):
-    s, c = ripple_carry_adder(a, b)
+    a, b, sum, carry = Byte(a), Byte(b), Byte(sum), Bit(carry)
+    s, c = ripple_carry_adder_8bit(a, b)
+    
     assert s == sum
     assert c == carry
 

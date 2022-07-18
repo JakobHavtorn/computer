@@ -1,9 +1,5 @@
 """Logic gates (implemented with transistors IRL)"""
 
-
-# TODO Use Bit class
-
-
 from computer.bits_and_bytes import Bit
 
 
@@ -16,7 +12,7 @@ def OR(a: Bit, b: Bit) -> Bit:
 
 
 def NOT(a: Bit) -> Bit:
-    return not a
+    return ~a
 
 
 def XOR(a: Bit, b: Bit) -> Bit:
@@ -27,4 +23,5 @@ def XOR(a: Bit, b: Bit) -> Bit:
 
 
 def NAND(a: Bit, b: Bit) -> Bit:
+    return NOT(AND(a, b))
     return NOT(AND(a, b))

@@ -13,5 +13,5 @@ pip install --upgrade --editable .
 
 ## Tests
 ```
-pytest tests
+pytest -sv tests/
 ```
