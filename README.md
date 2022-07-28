@@ -1,6 +1,6 @@
 # Computer
 
-Simulation of computer from scratch in Python.
+Simulation of computer from scratch in Python based on the [Crash Course: Computer Science](https://www.youtube.com/watch?v=tpIctyqH29Q&list=PL8dPuuaLjXtNlUrzyH5r6jN9ulIgZBpdo&index=1) YouTube series.
 
 
 ## Installation
